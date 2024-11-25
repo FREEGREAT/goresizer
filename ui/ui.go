@@ -2,7 +2,12 @@ package ui
 
 import (
 	"fmt"
+	"log"
+
+	"github.com/ncruces/zenity"
 )
+
+const defaultPath = ``
 
 func SelectOption() float64 {
 	var choose int
@@ -25,8 +30,23 @@ func SelectOption() float64 {
 func CreateFileName() string {
 	var name string
 	fmt.Println("Create name for compressed file")
-	fmt.Scanln(&name)
+	fmt.Scanln(&name, ".jpg")
 
 	return name
+
+}
+
+func SelectImgFile() string {
+
+	img, err := zenity.SelectFile(
+		zenity.Filename(defaultPath),
+		zenity.FileFilters{
+			{"Image files", []string{"*.png", "*.gif", "*.ico", "*.jpg", "*.webp"}, true},
+		})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return img
 
 }

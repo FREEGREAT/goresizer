@@ -5,28 +5,25 @@ import (
 	"log"
 	"os"
 
-	"github.com/ncruces/zenity"
 	"github.com/nfnt/resize"
+
+	storage "goresizer.com/m/minio"
 	"goresizer.com/m/ui"
 )
 
 const defaultPath = ``
+const bName = "pic-storage"
 
 func main() {
 
-	img, err := zenity.SelectFile(
-		zenity.Filename(defaultPath),
-		zenity.FileFilters{
-			{"Image files", []string{"*.png", "*.gif", "*.ico", "*.jpg", "*.webp"}, true},
-		})
-	if err != nil {
-		log.Fatal(err)
-	}
+	img := ui.SelectImgFile()
 
 	file, err := os.Open(img)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	storage.UploadImgFile(img)
 
 	img_decode, err := jpeg.Decode(file)
 	if err != nil {
