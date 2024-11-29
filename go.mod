@@ -3,9 +3,9 @@ module goresizer.com/m
 go 1.23.3
 
 require (
+	github.com/gorilla/mux v1.8.1
 	github.com/minio/minio-go/v7 v7.0.80
 	github.com/ncruces/zenity v0.10.14
-	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646
 )
 
 require (

@@ -4,38 +4,36 @@ import (
 	"context"
 	"fmt"
 	"log"
-
-	"goresizer.com/m/ui"
+	"mime/multipart"
 
 	"github.com/minio/minio-go/v7"
 )
 
 const bName = "pic-storage"
 
-func UploadImgFile(img_path string) {
+var fileID string
 
-
-	oName := ui.CreateFileName() + ".jpg"
+func UploadImgFile(img_name string, file multipart.File, size_file int64, contentType string) error {
 
 	minioClient := CreateConncet()
 
-	content, err := minioClient.FPutObject(context.Background(), bName, oName, img_path,
-		minio.PutObjectOptions{ContentType: "image/jpg"})
+	content, err := minioClient.PutObject(context.Background(), bName, img_name, file, size_file,
+		minio.PutObjectOptions{ContentType: contentType})
 	if err != nil {
 		log.Println(err)
-		return
+		return err
 	}
 	fmt.Println("Uploaded", content.Key, "to", content.Bucket, content.ETag, content.VersionID, content.Size)
-
+	fileID = img_name
+	return err
 }
 
 func DownloadImgFile() {
 	minioClient := CreateConncet()
 
-	oName := "2.jpg"
-	savePath := "/tmp/download/pp/" + oName
+	savePath := "/tmp/download/pp/" + fileID
 
-	err := minioClient.FGetObject(context.Background(), bName, oName, savePath,
+	err := minioClient.FGetObject(context.Background(), bName, fileID, savePath,
 		minio.GetObjectOptions{})
 	if err != nil {
 		log.Println(err)

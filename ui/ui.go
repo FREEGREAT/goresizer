@@ -36,7 +36,7 @@ func CreateFileName() string {
 
 }
 
-func SelectImgFile() string {
+func SelectImgFile() (string, error) {
 
 	img, err := zenity.SelectFile(
 		zenity.Filename(defaultPath),
@@ -47,6 +47,6 @@ func SelectImgFile() string {
 		log.Fatal(err)
 	}
 
-	return img
+	return img, err
 
 }
