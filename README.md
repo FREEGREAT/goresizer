@@ -18,7 +18,7 @@
 ### 1. Клонування репозиторію
 
 ```bash
-git clone <URL_REPO>
+git clone https://github.com/FREEGREAT/goresizer.git
 cd goresizer
 ```
 
@@ -26,29 +26,32 @@ cd goresizer
 
 - Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
 
-### 3. Запуск через Docker
-
+### 3. Запуск проекту
 ```bash
-docker-compose up --build
-```
-
-### 4. Виконання `consumer.go`
-
-Після запуску основного сервісу виконайте:
-
-```bash
-docker-compose exec app go run consumer/consumer.go
+make up && make run-main
 ```
 
 ### 5. Тестування
+Звертаючись до ендпоінта
+http://localhost:8080/login та http://localhost:8080/signup
+потрібно передати `email` `password`
+``` json
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+```
 
-Використовуйте API для завантаження (`/upload`) і завантаження файлів (`/download`).
+Звертаючись до ендпоінта
+http://localhost:8080/api/upload?resizepercent=0.5
+потрібно передати `resizepercent` який слугує значенням компресії фото в %, відповідно до цього значення в посиланні може бути тільки в границі (0,1)
+Також потрібно передати в хедер `Accsess` токен
+![зображення](https://github.com/user-attachments/assets/8f0e11ff-c574-4118-a712-d000242dd2f5)
 
-## Структура проекту
+Звертаючись до ендпоінта
+http://localhost:8080/api/download?filename=image.jpg
+Потрібно передати id(назву)файлу, який зберігається в minIO для того, щоб завантажити його. Зберігається файл в директорії `/tmp/download/pp`
+Також потрібно передати в хедер `Accsess` токен
+![зображення](https://github.com/user-attachments/assets/562265d2-a9a5-4877-b17b-85e489cfd5a5)
 
-- **main.go**: Основний файл для запуску API.
-- **consumer/consumer.go**: Логіка споживача RabbitMQ.
-- **internal/handlers/**: Хендлери для API.
-- **internal/utils/**: Утиліти (JWT, компресія).
-- **internal/user/**: Робота з користувачами.
-- **pkg/**: Логування та підключення до MongoDB.
+
