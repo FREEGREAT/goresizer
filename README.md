@@ -23,10 +23,15 @@ cd goresizer
 ```
 
 ### 2. Налаштування
-
+використовуючи команду
+```bash
+make up
+```
 - Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
+запустіть сервіси, які знаходяться в `docker-compose.yml` отримайте ключі доступу для minIO  та запишіть їх в `config.yml`
 
 ### 3. Запуск проекту
+
 ```bash
 make up && make run-main
 ```
