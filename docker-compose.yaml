@@ -10,10 +10,24 @@ services:
       MINIO_ROOT_PASSWORD: minio123
     volumes:
       - minio-storage:/minio/storage
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-    #   intrval: 30s
-    #   timeout: 20s
-    #   retries: 3
+  rabbitmq:
+    image: rabbitmq:4.0.4-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - 15672:15672  
+      - 5672:5672   
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - dbdata6:/data/db
 volumes:
   minio-storage:
+  dbdata6:

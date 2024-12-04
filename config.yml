@@ -1,0 +1,22 @@
+mongodb:
+  host: "localhost"
+  port: "27017"
+  database: "user_service"
+  auth_db:
+  username:
+  password:
+  collection: "users"
+
+minio:
+  endpoint: "localhost:9000"
+  storage: "pic-storage"
+  secret_k: "AjKV8T0ZNjL0lWuw9faDKv3BdxlXkUZUww1cdWAA"
+  access_k: "c3pDWpaILZZRgeOo6cw9"
+
+rabbitmq:
+  username: "guest"
+  password: "guest"
+  host: "localhost"
+  port: "5672"
+  queuename: "Gompress01queue"
+
