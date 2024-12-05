@@ -34,26 +34,26 @@ make up
 - Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
 ``` yaml
 mongodb:
-  host: <your host> reuired
-  port: <your port> required
-  database: <your database name> required
-  auth_db: <your auth_token> not required
-  username: <your username> not required
-  password: <your password> not required
-  collection: <your_collection> required
+  host: <your host> 
+  port: <your port> 
+  database: <your database name> 
+  auth_db: <your auth_token> 
+  username: <your username>
+  password: <your password>
+  collection: <your_collection>
 
 minio:
-  endpoint: <your endpoint> required
-  storage: <your storage name> required
-  secret_k: <your secret key> required
-  access_k: <your access key> required
+  endpoint: <your endpoint> 
+  storage: <your storage name>
+  secret_k: <your secret key> 
+  access_k: <your access key> 
 
 rabbitmq:
   username: "<your username>"
   password: "<your password>"
   host: "<your hots>"
   port: "<your port>"
-  queuename: "<your queue name (queue generate automatically)>"
+  queuename: "<your queue name (queue will generate automatically)>"
 
 
 ```

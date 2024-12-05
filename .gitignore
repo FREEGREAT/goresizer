@@ -1,5 +1,5 @@
 *.jpg
 *.png
 *.log
-logs/*
+logs/
 rabbitmq/*
