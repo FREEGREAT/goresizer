@@ -9,7 +9,6 @@ import (
 	"goresizer.com/m/internal/utils"
 )
 
-// AuthMiddleware забезпечує авторизацію через токен
 func AuthMiddleware(storage user.Storage) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -37,16 +36,7 @@ func AuthMiddleware(storage user.Storage) func(http.Handler) http.Handler {
 				http.Error(w, "Invalid token payload", http.StatusUnauthorized)
 				return
 			}
-			//
-			//					ПЕРЕВІРКА НА ЕРРОР РОБИТЬ ЕРРОР. ЕРРОРУ БІЛЬШЕ НЕМА.
-			//
-			// _, err = storage.FindOne(r.Context(), userID)
-			// if err != nil {
-			// 	http.Error(w, "User not found", http.StatusUnauthorized)
-			// 	return
-			// }
 
-			// Додаємо user_id у контекст запиту
 			ctx := context.WithValue(r.Context(), "user_id", userID)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})

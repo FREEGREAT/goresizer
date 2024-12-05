@@ -7,7 +7,7 @@ down:
 logs:
 	docker-compose logs -f
 
-run-main:
-	go run main.go & go run consumer/consumer.go
+run:
+	go run cmd/app/main.go && go run cmd/consumer/consumer.go 
 
 	

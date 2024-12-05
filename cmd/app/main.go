@@ -9,7 +9,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"goresizer.com/m/internal/config"
-	"goresizer.com/m/internal/handlers"
+	handlers "goresizer.com/m/internal/handlers/restAPI"
 	middleware "goresizer.com/m/internal/midleware"
 	"goresizer.com/m/internal/user/db"
 	"goresizer.com/m/pkg/logging"
@@ -21,7 +21,7 @@ const bName = "pic-storage"
 
 func main() {
 	logger := logging.GetLogger()
-	cfg := config.GetConfig() // Завантаження конфігурації
+	cfg := config.GetConfig()
 	if cfg == nil {
 		logger.Fatal("Конфігурація не завантажена")
 	}

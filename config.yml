@@ -10,8 +10,8 @@ mongodb:
 minio:
   endpoint: "localhost:9000"
   storage: "pic-storage"
-  secret_k: "AjKV8T0ZNjL0lWuw9faDKv3BdxlXkUZUww1cdWAA"
-  access_k: "c3pDWpaILZZRgeOo6cw9"
+  secret_k: "JkkMaCUFNZehB4WjHMfetCtgxZoM3nuWG9NNrIAC"
+  access_k: "bfdmSZwI8e54ipPaVpRF"
 
 rabbitmq:
   username: "guest"

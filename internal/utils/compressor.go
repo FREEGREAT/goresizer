@@ -9,7 +9,7 @@ import (
 
 	"github.com/nfnt/resize"
 
-	storage "goresizer.com/m/minio"
+	storage "goresizer.com/m/pkg/minio"
 )
 
 type BytesReaderFile struct {

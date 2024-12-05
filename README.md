@@ -2,23 +2,24 @@
 # GoResizer
 
 Цей проект виконує такі завдання:
-- Завантаження файлів у MinIO.
-- Комунікація через RabbitMQ.
-- Зберігання даних у MongoDB.
-- Стиснення файлів через утиліту компресії.
+- Storage files in MinIO.
+- Communicate using by RabbitMQ.
+- Storage users ing MongoDB.
+- Compress files using func `Compress()` and gomodule `"github.com/nfnt/resize"`.
 
-## Системні вимоги
+## System requiretments
 
-- Docker і Docker Compose
-- Go 1.20 або новіше
-- Доступ до MinIO, RabbitMQ, MongoDB
+- Docker Compose
+- Go 1.23
+- MinIO, RabbitMQ, MongoDB
 
-## Установка та запуск
+## Install and running
 
-### 1. Клонування репозиторію
+### 1. Clone repo
 
 ```bash
 git clone https://github.com/FREEGREAT/goresizer.git
+git clone "<URL_REPO>"
 cd goresizer
 ```
 
@@ -28,22 +29,46 @@ cd goresizer
 make up
 ```
 -запустіть сервіси, які знаходяться в `docker-compose.yml` отримайте ключі доступу для minIO
-- Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
+### 2. Configuration
 
-### 3. Запуск проекту
+- Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
+``` yaml
+mongodb:
+  host: <your host> reuired
+  port: <your port> required
+  database: <your database name> required
+  auth_db: <your auth_token> not required
+  username: <your username> not required
+  password: <your password> not required
+  collection: <your_collection> required
+
+minio:
+  endpoint: <your endpoint> required
+  storage: <your storage name> required
+  secret_k: <your secret key> required
+  access_k: <your access key> required
+
+rabbitmq:
+  username: "<your username>"
+  password: "<your password>"
+  host: "<your hots>"
+  port: "<your port>"
+  queuename: "<your queue name (queue generate automatically)>"
+
+
+```
+
+### 3. Run using by docker
 
 ```bash
-make up && make run-main
-```
-Або якщо ви виконували попередній пукнт, то просто 
-``` bash
-make run-main
+docker-compose up --build
 ```
 
-### 5. Тестування
-Звертаючись до ендпоінта
-http://localhost:8080/login та http://localhost:8080/signup
-потрібно передати `email` `password`
+### 5. Testing
+
+Calling to endpoints
+http://localhost:8080/login and http://localhost:8080/signup
+you must to transfer  `email` and `password`
 ``` json
 {
   "email": "testuser@example.com",
@@ -51,16 +76,24 @@ http://localhost:8080/login та http://localhost:8080/signup
 }
 ```
 
-Звертаючись до ендпоінта
+Calling to endpoint
 http://localhost:8080/api/upload?resizepercent=0.5
-потрібно передати `resizepercent` який слугує значенням компресії фото в %, відповідно до цього значення в посиланні може бути тільки в границі (0,1)
-Також потрібно передати в хедер `Accsess` токен
-![зображення](https://github.com/user-attachments/assets/8f0e11ff-c574-4118-a712-d000242dd2f5)
+you must to trasfer `resizepercent` which serves as a photo compression value in %, accordingly, this value in the link can only be in the range (0,1)
+You also need to pass a token to the `Accsess` header
+![Picture](https://github.com/user-attachments/assets/8f0e11ff-c574-4118-a712-d000242dd2f5)
 
-Звертаючись до ендпоінта
+Addressing the endpoint
 http://localhost:8080/api/download?filename=image.jpg
-Потрібно передати id(назву)файлу, який зберігається в minIO для того, щоб завантажити його. Зберігається файл в директорії `/tmp/download/pp`
-Також потрібно передати в хедер `Accsess` токен
-![зображення](https://github.com/user-attachments/assets/562265d2-a9a5-4877-b17b-85e489cfd5a5)
+You need to pass the id (name) of the file stored in minIO in order to download it. The file is stored in the directory `/tmp/download/pp`.
+You also need to pass a token to the `Accsess` header
+![Picture](https://github.com/user-attachments/assets/562265d2-a9a5-4877-b17b-85e489cfd5a5)
 
 
+
+## Project structure
+
+- **main.go**: The main file to run the API.
+- **internal/handlers/**:Handlers for the API.
+- **internal/utils/**: Utilities (JWT, compression).
+- **internal/user/**: Work with users.
+- **internal/pkg/**: Logging and connection to MongoDB, Minio.
