@@ -54,10 +54,10 @@ rabbitmq:
   port: "<your port>"
   queuename: "<your queue name (queue will generate automatically)>"
 ### 4. Tun project
-`make up` - run docker-compose with services minIO, MongoDB, RabbitMQ
-`make down` - stop docker-compose
-`make logs` - check docker-compose logs
-` make run` - run all project
+`make up` - run docker-compose with services minIO, MongoDB, RabbitMQ  <br />
+`make down` - stop docker-compose <br />
+`make logs` - check docker-compose logs <br />
+`make run` - run all project <br />
 
 ### 5. Testing
 
