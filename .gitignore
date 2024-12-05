@@ -1,5 +1,8 @@
 *.jpg
 *.png
 *.log
+
+config.yml
+
 logs/
 rabbitmq/*

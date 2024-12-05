@@ -1,4 +1,3 @@
-
 # GoResizer
 
 This project performs the following tasks:
@@ -29,6 +28,7 @@ using the command
 make up
 ```
 -start the services that are in `docker-compose.yml` get access keys for minIO
+
 ### 3. Configuration.
 
 - Edit the `config.yml` file to connect to MinIO, RabbitMQ and MongoDB.``` yaml
@@ -53,6 +53,7 @@ rabbitmq:
   host: "<your hots>"
   port: "<your port>"
   queuename: "<your queue name (queue will generate automatically)>"
+
 ### 4. Tun project
 `make up` - run docker-compose with services minIO, MongoDB, RabbitMQ  <br />
 `make down` - stop docker-compose <br />

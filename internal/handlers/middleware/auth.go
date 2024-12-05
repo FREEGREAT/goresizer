@@ -25,7 +25,7 @@ func AuthMiddleware(storage user.Storage) func(http.Handler) http.Handler {
 			}
 
 			tokenString := tokenParts[1]
-			claims, err := utils.ParseAccessToken(tokenString)
+			claims, err := utils.ValidateAccessToken(tokenString)
 			if err != nil {
 				http.Error(w, "Invalid or expired token", http.StatusUnauthorized)
 				return

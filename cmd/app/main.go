@@ -10,7 +10,7 @@ import (
 	"github.com/gorilla/mux"
 	"goresizer.com/m/internal/config"
 	handlers "goresizer.com/m/internal/handlers/restAPI"
-	middleware "goresizer.com/m/internal/midleware"
+	middleware "goresizer.com/m/internal/handlers/middleware"
 	"goresizer.com/m/internal/user/db"
 	"goresizer.com/m/pkg/logging"
 	"goresizer.com/m/pkg/mongodb"

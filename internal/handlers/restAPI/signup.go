@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"goresizer.com/m/internal/user"
+	"goresizer.com/m/internal/utils"
 )
 
 type SignUpRequest struct {
@@ -27,10 +28,14 @@ func SignUpHandler(storage user.Storage) http.HandlerFunc {
 			http.Error(w, "User already exists", http.StatusConflict)
 			return
 		}
+		passhash, err := utils.HashPassword(req.Password)
+		if err != nil {
+			http.Error(w, "Error while hashing password", http.StatusConflict)
+		}
 		newUser := user.User{
 			Username:     req.Username,
 			Email:        req.Email,
-			PasswordHash: req.Password,
+			PasswordHash: passhash,
 		}
 
 		userID, err := storage.Create(r.Context(), newUser)
