@@ -1,7 +1,7 @@
 
 # GoResizer
 
-Цей проект виконує такі завдання:
+This project performs the following tasks:
 - Storage files in MinIO.
 - Communicate using by RabbitMQ.
 - Storage users ing MongoDB.
@@ -23,16 +23,15 @@ git clone "<URL_REPO>"
 cd goresizer
 ```
 
-### 2. Налаштування
-використовуючи команду
-```bash
+### 2. Customize
+using the command
+``` bash
 make up
 ```
--запустіть сервіси, які знаходяться в `docker-compose.yml` отримайте ключі доступу для minIO
-### 2. Configuration
+-start the services that are in `docker-compose.yml` get access keys for minIO
+### 3. Configuration.
 
-- Відредагуйте файл `config.yml` для підключення до MinIO, RabbitMQ та MongoDB.
-``` yaml
+- Edit the `config.yml` file to connect to MinIO, RabbitMQ and MongoDB.``` yaml
 mongodb:
   host: <your host> 
   port: <your port> 
@@ -54,15 +53,11 @@ rabbitmq:
   host: "<your hots>"
   port: "<your port>"
   queuename: "<your queue name (queue will generate automatically)>"
-
-
-```
-
-### 3. Run using by docker
-
-```bash
-docker-compose up --build
-```
+### 4. Tun project
+`make up` - run docker-compose with services minIO, MongoDB, RabbitMQ
+`make down` - stop docker-compose
+`make logs` - check docker-compose logs
+` make run` - run all project
 
 ### 5. Testing
 
