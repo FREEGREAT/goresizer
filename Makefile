@@ -8,6 +8,5 @@ logs:
 	docker-compose logs -f
 
 run:
-	go run cmd/app/main.go && go run cmd/consumer/consumer.go 
-
+	go run cmd/app/main.go
 	

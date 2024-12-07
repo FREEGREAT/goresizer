@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"goresizer.com/m/internal/user"
+	"goresizer.com/m/internal/storage/db"
 	"goresizer.com/m/pkg/logging"
 )
 

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"goresizer.com/m/internal/user"
+	"goresizer.com/m/internal/storage/db"
 	"goresizer.com/m/internal/utils"
 )
 

@@ -1,4 +1,4 @@
-package main
+package consumer
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 
 	amqp "github.com/rabbitmq/amqp091-go"
 	"goresizer.com/m/internal/config"
-	"goresizer.com/m/internal/utils"
+	service "goresizer.com/m/internal/service/file"
 )
 
 type MessageData struct {
@@ -14,7 +14,7 @@ type MessageData struct {
 	Value   float64 `json:"value"`
 }
 
-func main() {
+func Consumer() {
 	cfg := config.GetConfig().RabbitMQ
 	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
 	if err != nil {
@@ -67,12 +67,11 @@ func main() {
 
 		log.Printf("Отримано повідомлення: %s з значенням: %f", data.Message, data.Value)
 
-		err = utils.Compress(data.Message, data.Value)
+		err = service.Compress(data.Message, data.Value)
 		if err != nil {
 			log.Printf("Помилка обробки зображення: %v", err)
 		} else {
 			log.Printf("Повідомлення успішно оброблено: %s", data.Message)
 		}
 	}
-	return
 }

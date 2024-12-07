@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"goresizer.com/m/internal/handlers/amqp/producer"
-	storage "goresizer.com/m/pkg/minio"
+	"goresizer.com/m/internal/service/producer"
+	storage "goresizer.com/m/internal/storage/minio"
 )
 
 func UploadImgHandler(w http.ResponseWriter, r *http.Request) {

@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	storage "goresizer.com/m/pkg/minio"
+	storage "goresizer.com/m/internal/storage/minio"
 )
 
 func DownloadImgHandler(w http.ResponseWriter, r *http.Request) {

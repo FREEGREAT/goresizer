@@ -1,4 +1,4 @@
-package storage
+package minio
 
 import (
 	"context"
@@ -8,6 +8,7 @@ import (
 
 	"github.com/minio/minio-go/v7"
 	"goresizer.com/m/internal/config"
+	client "goresizer.com/m/pkg/minio"
 )
 
 var cfg = config.GetConfig().Minio
@@ -20,7 +21,7 @@ func SetFileID(id string) {
 
 func UploadImgFile(img_name string, file multipart.File, size_file int64, contentType string) error {
 
-	minioClient := CreateConncet()
+	minioClient := client.CreateConncet()
 
 	content, err := minioClient.PutObject(context.Background(), cfg.Storage, img_name, file, size_file,
 		minio.PutObjectOptions{ContentType: contentType})
@@ -33,7 +34,7 @@ func UploadImgFile(img_name string, file multipart.File, size_file int64, conten
 	return err
 }
 func GetImgFile(img_name string) (*minio.Object, error) {
-	minioClient := CreateConncet()
+	minioClient := client.CreateConncet()
 
 	object, err := minioClient.GetObject(context.Background(), cfg.Storage, img_name, minio.GetObjectOptions{})
 	if err != nil {
@@ -45,7 +46,7 @@ func GetImgFile(img_name string) (*minio.Object, error) {
 }
 
 func DownloadImgFile() error {
-	minioClient := CreateConncet()
+	minioClient := client.CreateConncet()
 
 	savePath := fmt.Sprintf("/tmp/download/pp/%s", fileID)
 

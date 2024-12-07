@@ -9,9 +9,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"goresizer.com/m/internal/config"
-	handlers "goresizer.com/m/internal/handlers/restAPI"
+	"goresizer.com/m/internal/handlers/amqp/consumer"
 	middleware "goresizer.com/m/internal/handlers/middleware"
-	"goresizer.com/m/internal/user/db"
+	handlers "goresizer.com/m/internal/handlers/restAPI"
+	db "goresizer.com/m/internal/storage/mongodb"
 	"goresizer.com/m/pkg/logging"
 	"goresizer.com/m/pkg/mongodb"
 )
@@ -37,7 +38,7 @@ func main() {
 
 	r.HandleFunc("/signup", handlers.SignUpHandler(storage)).Methods("POST")
 	r.HandleFunc("/login", handlers.LoginHandler(storage)).Methods("POST")
-
+	go consumer.Consumer()
 	protected := r.PathPrefix("/api").Subrouter()
 	protected.Use(middleware.AuthMiddleware(storage))
 	protected.HandleFunc("/upload", handlers.UploadImgHandler).Methods("POST")
