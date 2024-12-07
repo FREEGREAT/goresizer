@@ -12,10 +12,10 @@ func NewClient(ctx context.Context, host, port, username, password, database, au
 	var mongoDBURL string
 	var isAuth bool
 	if username == "" && password == "" {
-		mongoDBURL = fmt.Sprintf("mongodb://%s:%s", host,port)
+		mongoDBURL = fmt.Sprintf("mongodb://%s:%s", host, port)
 	} else {
 		isAuth = true
-		mongoDBURL = fmt.Sprintf("mongodb://%s:%s@%s:%s", username, password, host, port) 
+		mongoDBURL = fmt.Sprintf("mongodb://%s:%s@%s:%s", username, password, host, port)
 	}
 
 	clientOptions := options.Client().ApplyURI(mongoDBURL)
