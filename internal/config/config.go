@@ -30,6 +30,10 @@ type Config struct {
 		Username  string `yaml:"username"`
 		Password  string `yaml:"password"`
 	} `yaml:"rabbitmq"`
+	JWTsecrets struct {
+		AccessKey  string `yaml:"access"`
+		RefreshKey string `yaml:"access"`
+	}
 }
 
 var instance *Config

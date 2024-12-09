@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"goresizer.com/m/internal/storage/db"
-	"goresizer.com/m/internal/utils"
+	"goresizer.com/m/internal/service"
+	user "goresizer.com/m/internal/storage"
 )
 
 type SignUpRequest struct {
@@ -14,7 +14,7 @@ type SignUpRequest struct {
 	Password string `json:"password"`
 }
 
-func SignUpHandler(storage user.Storage) http.HandlerFunc {
+func SignUpHandler(storage user.Storage, authService service.AuthService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req SignUpRequest
 		err := json.NewDecoder(r.Body).Decode(&req)
@@ -23,12 +23,15 @@ func SignUpHandler(storage user.Storage) http.HandlerFunc {
 			return
 		}
 
-		_, err = storage.FindByEmail(r.Context(), req.Email)
+		filter := user.FindUserByFilter{
+			Email: req.Email,
+		}
+		_, err = storage.FindOne(r.Context(), filter)
 		if err == nil {
 			http.Error(w, "User already exists", http.StatusConflict)
 			return
 		}
-		passhash, err := utils.HashPassword(req.Password)
+		passhash, err := authService.HashPassword(req.Password)
 		if err != nil {
 			http.Error(w, "Error while hashing password", http.StatusConflict)
 		}

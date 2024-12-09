@@ -6,7 +6,7 @@ import (
 
 	amqp "github.com/rabbitmq/amqp091-go"
 	"goresizer.com/m/internal/config"
-	service "goresizer.com/m/internal/service/file"
+	service "goresizer.com/m/internal/service"
 )
 
 type MessageData struct {

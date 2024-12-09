@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"goresizer.com/m/internal/service/producer"
+	producer "goresizer.com/m/internal/service"
 	storage "goresizer.com/m/internal/storage/minio"
 )
 

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"goresizer.com/m/internal/storage/db"
-	"goresizer.com/m/internal/utils"
+	"goresizer.com/m/internal/service"
+	user "goresizer.com/m/internal/storage"
 )
 
 type LoginRequest struct {
@@ -18,7 +18,7 @@ type TokenResponse struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func LoginHandler(storage user.Storage) http.HandlerFunc {
+func LoginHandler(storage user.Storage, authService service.AuthService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req LoginRequest
 
@@ -28,24 +28,28 @@ func LoginHandler(storage user.Storage) http.HandlerFunc {
 			return
 		}
 
-		user, err := storage.FindByEmail(r.Context(), req.Email)
+		filter := user.FindUserByFilter{
+			Email: req.Email,
+		}
+
+		user, err := storage.FindOne(r.Context(), filter)
 		if err != nil {
 			http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 			return
 		}
 
-		if !utils.VerifyPassword(req.Password, user.PasswordHash) {
+		if !authService.VerifyPassword(req.Password, user.PasswordHash) {
 			http.Error(w, "Invalid email or password", http.StatusUnauthorized)
 			return
 		}
 
-		accessToken, err := utils.GenerateAccessToken(user.ID, user.Email)
+		accessToken, err := authService.GenerateAccessToken(user.ID, user.Email)
 		if err != nil {
 			http.Error(w, "Failed to generate access token", http.StatusInternalServerError)
 			return
 		}
 
-		refreshToken, err := utils.GenerateRefreshToken(user.ID)
+		refreshToken, err := authService.GenerateRefreshToken(user.ID)
 		if err != nil {
 			http.Error(w, "Failed to generate refresh token", http.StatusInternalServerError)
 			return

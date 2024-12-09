@@ -5,11 +5,10 @@ import (
 	"net/http"
 	"strings"
 
-	"goresizer.com/m/internal/storage/db"
-	"goresizer.com/m/internal/utils"
+	"goresizer.com/m/internal/service"
 )
 
-func AuthMiddleware(storage user.Storage) func(http.Handler) http.Handler {
+func AuthMiddleware(authService service.AuthService) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			authHeader := r.Header.Get("Authorization")
@@ -25,7 +24,8 @@ func AuthMiddleware(storage user.Storage) func(http.Handler) http.Handler {
 			}
 
 			tokenString := tokenParts[1]
-			claims, err := utils.ValidateAccessToken(tokenString)
+
+			claims, err := authService.ValidateAccessToken(tokenString)
 			if err != nil {
 				http.Error(w, "Invalid or expired token", http.StatusUnauthorized)
 				return

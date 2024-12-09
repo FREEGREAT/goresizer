@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"goresizer.com/m/internal/storage/db"
+	user "goresizer.com/m/internal/storage"
 	"goresizer.com/m/pkg/logging"
 )
 
@@ -56,22 +56,24 @@ func (d *db) Delete(ctx context.Context, id string) error {
 }
 
 // FindOne implements user.Storage.
-func (d *db) FindOne(ctx context.Context, id string) (u user.User, err error) {
-	oid, err := primitive.ObjectIDFromHex(id)
-	if err != nil {
-		return u, fmt.Errorf("failed to conver hex to objectID. hex:%s", id)
+func (d *db) FindOne(ctx context.Context, customFilter user.FindUserByFilter) (u user.User, err error) {
+	filter := bson.M{}
+	if customFilter.Email != "" {
+		filter["email"] = customFilter.Email
 	}
-	filter := bson.M{"_id": oid}
+	if customFilter.UserID != "" {
+		filter["id"] = customFilter.UserID
+	}
 
 	result := d.collection.FindOne(ctx, filter)
 	if result.Err() != nil {
 		if errors.Is(result.Err(), mongo.ErrNoDocuments) {
 			return u, fmt.Errorf("ErrEntityNotFound")
 		}
-		return u, fmt.Errorf("failed to find one user by id: %s due to error: %v", id, err)
+		return u, fmt.Errorf("failed to find one user by id: %s due to error: %v", customFilter, err)
 	}
 	if err = result.Decode(&u); err != nil {
-		return u, fmt.Errorf("failed to decode user(id:%s) from DB due to error: %v", id, err)
+		return u, fmt.Errorf("failed to decode user(id:%s) from DB due to error: %v", customFilter, err)
 	}
 
 	return u, nil
@@ -113,25 +115,6 @@ func (d *db) Update(ctx context.Context, user user.User) error {
 
 	d.logger.Tracef("Matched %d documents and Modified %d documents", result.MatchedCount, result.ModifiedCount)
 	return nil
-}
-
-// FindByEmail implements user.Storage.
-func (d *db) FindByEmail(ctx context.Context, email string) (user.User, error) {
-	var u user.User
-	filter := bson.M{"email": email}
-
-	result := d.collection.FindOne(ctx, filter)
-	if result.Err() != nil {
-		if errors.Is(result.Err(), mongo.ErrNoDocuments) {
-			return u, fmt.Errorf("ErrEntityNotFound")
-		}
-		return u, fmt.Errorf("failed to find user by email: %s due to error: %v", email, result.Err())
-	}
-	if err := result.Decode(&u); err != nil {
-		return u, fmt.Errorf("failed to decode user by email: %s due to error: %v", email, err)
-	}
-
-	return u, nil
 }
 
 func NewStorage(database *mongo.Database, collection string, logger *logging.Logger) user.Storage {
