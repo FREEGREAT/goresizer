@@ -31,7 +31,8 @@ make up
 
 ### 3. Configuration.
 
-- Edit the `config.yml` file to connect to MinIO, RabbitMQ and MongoDB.``` yaml
+- Edit the `config.yml` file to connect to MinIO, RabbitMQ and MongoDB.
+``` yaml
 mongodb:
   host: <your host> 
   port: <your port> 
@@ -58,7 +59,7 @@ jwt:
   access: "qwerty"
   refresh: "ytrewq"
   
-  "
+```
 
 ### 4. Tun project
 `make up` - run docker-compose with services minIO, MongoDB, RabbitMQ  <br />
