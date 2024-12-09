@@ -1,4 +1,4 @@
-package user
+package storage
 
 type User struct {
 	ID           string `json: "id" bson:"_id,omitempty"`
@@ -11,4 +11,9 @@ type CreateUserDTO struct {
 	Username string `json: "username"`
 	Password string `json: "password"`
 	Email    string `json: "email"`
+}
+
+type FindUserByFilter struct {
+	Email  string
+	UserID string
 }

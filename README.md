@@ -52,7 +52,13 @@ rabbitmq:
   password: "<your password>"
   host: "<your hots>"
   port: "<your port>"
-  queuename: "<your queue name (queue will generate automatically)>"
+  queuename: "<your queue name (queue will generate automatically)>
+
+jwt:
+  access: "qwerty"
+  refresh: "ytrewq"
+  
+  "
 
 ### 4. Tun project
 `make up` - run docker-compose with services minIO, MongoDB, RabbitMQ  <br />
@@ -84,12 +90,3 @@ You need to pass the id (name) of the file stored in minIO in order to download 
 You also need to pass a token to the `Accsess` header
 ![Picture](https://github.com/user-attachments/assets/562265d2-a9a5-4877-b17b-85e489cfd5a5)
 
-
-
-## Project structure
-
-- **main.go**: The main file to run the API.
-- **internal/handlers/**:Handlers for the API.
-- **internal/utils/**: Utilities (JWT, compression).
-- **internal/user/**: Work with users.
-- **internal/pkg/**: Logging and connection to MongoDB, Minio.

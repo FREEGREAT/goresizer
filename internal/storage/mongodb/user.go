@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"goresizer.com/m/internal/service"
 	user "goresizer.com/m/internal/storage"
 	"goresizer.com/m/pkg/logging"
 )
@@ -117,7 +118,7 @@ func (d *db) Update(ctx context.Context, user user.User) error {
 	return nil
 }
 
-func NewStorage(database *mongo.Database, collection string, logger *logging.Logger) user.Storage {
+func NewStorage(database *mongo.Database, collection string, logger *logging.Logger) service.Storage {
 	return &db{
 		collection: database.Collection(collection),
 		logger:     logger,

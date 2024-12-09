@@ -18,7 +18,7 @@ type TokenResponse struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-func LoginHandler(storage user.Storage, authService service.AuthService) http.HandlerFunc {
+func LoginHandler(storage service.Storage, authService service.AuthService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req LoginRequest
 

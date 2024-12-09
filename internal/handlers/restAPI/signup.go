@@ -14,7 +14,7 @@ type SignUpRequest struct {
 	Password string `json:"password"`
 }
 
-func SignUpHandler(storage user.Storage, authService service.AuthService) http.HandlerFunc {
+func SignUpHandler(storage service.Storage, authService service.AuthService) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req SignUpRequest
 		err := json.NewDecoder(r.Body).Decode(&req)

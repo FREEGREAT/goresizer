@@ -13,7 +13,6 @@ import (
 	middleware "goresizer.com/m/internal/handlers/middleware"
 	handlers "goresizer.com/m/internal/handlers/restAPI"
 	"goresizer.com/m/internal/service"
-	user "goresizer.com/m/internal/storage"
 	db "goresizer.com/m/internal/storage/mongodb"
 	"goresizer.com/m/pkg/logging"
 	"goresizer.com/m/pkg/mongodb"
@@ -48,7 +47,7 @@ func initConfig(logger *logging.Logger) *config.Config {
 	return cfg
 }
 
-func initRouter(storage user.Storage, authService service.AuthService) *mux.Router {
+func initRouter(storage service.Storage, authService service.AuthService) *mux.Router {
 	r := mux.NewRouter()
 
 	r.HandleFunc("/signup", handlers.SignUpHandler(storage, authService)).Methods("POST")
