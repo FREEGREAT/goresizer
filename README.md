@@ -1,4 +1,4 @@
-# GoResizer
+# Resyze
 
 This project performs the following tasks:
 - Storage files in MinIO.
